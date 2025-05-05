@@ -20,35 +20,38 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Podman Image') {
             steps {
-                sh 'docker build -t app_from_jenkins:v$BUILD_NUMBER .'
+                // Replace 'docker' with 'podman' to build the image
+                sh 'podman build -t app_from_jenkins:v$BUILD_NUMBER .'
             }
             post {
                 success {
-                    echo 'Docker Image Successfully Built'
+                    echo 'Podman Image Successfully Built'
                 }
             }
         }
 
-        stage('Test Docker Image') {
+        stage('Test Podman Image') {
             steps {
-                sh 'docker run -d --name lab$BUILD_NUMBER -p 7070:8080 app_from_jenkins:v$BUILD_NUMBER'
+                // Replace 'docker' with 'podman' to run the container
+                sh 'podman run -d --name lab$BUILD_NUMBER -p 7070:8080 app_from_jenkins:v$BUILD_NUMBER'
             }
             post {
                 success {
-                    echo 'Docker Container Successfully Tested'
+                    echo 'Podman Container Successfully Tested'
                 }
             }
         }
 
         stage('Remove Container') {
             steps {
-                sh 'docker rm -f lab$BUILD_NUMBER'
+                // Replace 'docker' with 'podman' to remove the container
+                sh 'podman rm -f lab$BUILD_NUMBER'
             }
             post {
                 success {
-                    echo 'Docker Container Successfully Removed'
+                    echo 'Podman Container Successfully Removed'
                 }
             }
         }
