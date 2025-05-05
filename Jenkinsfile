@@ -51,13 +51,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy App On KuberNetes') {
-            steps{
-              sh 'cd kubernetes && minikube kubectl -- apply -f .'
+        stage('Deploy App on Kubernetes') {
+            steps {
+                // Apply Kubernetes manifests using regular kubectl
+                sh 'kubectl apply -f kubernetes/'
             }
             post {
                 success {
-                    echo 'App Successfully Deployed'
+                    echo 'App Successfully Deployed to Kubernetes'
                 }
             }
         }
